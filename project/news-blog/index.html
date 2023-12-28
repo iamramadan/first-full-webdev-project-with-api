@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Blog</title>
+    <!-- Bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Custome style -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header class="bg-dark py-3">
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <div class="logo border p-1 px-2 text-white">NewsWorld.</div>
+                <form action="" id="searchForm">
+                    <div class="input-group">
+                        <input type="search" id="search" name="search" placeholder="Search for News..." class="form-control" id="">
+                        <div class="bg-white px-2 pt-1 input-group-prepend">
+                            <i class=" form-addon fa fa-search" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <section class="news-list-container py-5">
+        <div class="container">
+            <aside id="searchKeyword" class="py-3 lead">Showings Articles with keywords: <span></span></aside>
+            <div class="row card-groups g-4" id="news-list">
+                <div class="col-12 col-md-3">
+                    <div class="card border-success">
+                        <div class="card-header p-0">
+                            <a href="#">
+                                <img src="https://placehold.co/600x400" class="w-100" alt="">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="title h6"><a href="">Resumen semanal de BeInCrypto: Ataque contra Ledger Connect, Bitcoin registra ATH en Argentina, Bonos Volcán de El Salvador</a></h2>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-6 author">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    <span>RAmadan</span>
+                                </div>
+                                <div class="col-6 pub-date">
+                                    <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                    <span>12-20-2023</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- News detail Modal Template -->
+    <section class="my-modal hide-modal">
+        <div class="my-modal-content">
+            <div class="container">
+                <div class="card">
+                    <div class="card-body">
+                        dkdjdkdjdkdkj
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <!-- Font awesome script -->
+    <script src="https://kit.fontawesome.com/7cfae44c46.js" crossorigin="anonymous"></script>
+   
+    <!-- Custom scritp -->
+    <script type="module">
+        import {News} from './assets/js/news.js'
+        const url = 'https://newsapi.org/v2/everything?sortBy=publishedAt'
+        const N = new News(url,'d1ab8e0e75c641d98fb7dd3c6756e7ba','blockchain')
+        
+        const pop = () => alert('dkdjddj')
+
+        N.getNewsList()
+        const nlist = document.getElementById('news-list')
+        const skwd = document.querySelector('#searchKeyword > span')
+        N.displayNewsList(nlist).then( output => {
+            handlePop(output)
+        })
+        
+        // Handle the Search Opeartion
+        skwd.innerHTML = N.getKeyword();
+        const searchF = document.getElementById('searchForm')
+        searchF.onsubmit = e => {
+            e.preventDefault()
+            const s = document.getElementById('search').value
+            if(s == '') {
+                alert('Search input must not be empty')
+                return false
+            }
+            N.setKeyword(s)
+            N.getNewsList()
+            skwd.innerHTML = N.getKeyword();
+            const HtmlOuptut = N.displayNewsList(nlist)
+
+            HtmlOuptut.then((tag)=>{
+                handlePop(tag)
+            })
+        }
+
+        const handlePop = tag => {
+            tag.querySelectorAll('[data-title]').forEach(card => {
+                const title = card.getAttribute('data-title')
+                card.querySelectorAll('.openModal').forEach( link => {
+                    link.onclick = () => N.pop(title)
+                    console.log
+                })
+            })
+            
+        }
+
+        
+     
+      
+    </script>
+</body>
+</html>

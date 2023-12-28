@@ -1,0 +1,49 @@
+:root{
+    --cust-primary_color:teal;
+    --cust-secondary_color:orange;
+    --light-dark:gray
+}
+body{
+    position:relative;
+}
+.title a{
+ text-decoration: none;
+ color:var(--cust-primary_color);
+ text-overflow: ellipsis;
+ max-height:2px;
+}
+.title a:hover{ 
+    color:rgba(3, 133, 138, 0.8)
+}
+
+#news-list  .card-header img{
+    aspect-ratio: 9/5;
+    object-fit: cover;
+}
+
+.my-modal{
+    
+    position:fixed;
+    width:100%;
+    height: 100vh;
+    top:0;
+    left:0;
+    z-index:1000;
+    background:rgba(3, 133, 138, 0.439);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y:scroll;
+    padding-top:5rem;
+    padding-bottom:5rem;
+}
+.my-modal .my-modal-content{
+    width:50%;
+    max-width:700px;
+    margin:auto;
+    background:white;
+}
+
+.my-modal.hide-modal{
+    display:none;
+}
